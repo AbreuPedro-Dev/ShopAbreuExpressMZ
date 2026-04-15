@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopAbreuExpressMZ Promo Abreu Pedro — E-Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">◆</span>
+        ShopAbreuExpress<em>MZ</em>
+      </a>
+
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Pesquisar produtos…" autocomplete="off" />
+        <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+
+      <nav class="cat-nav" id="catNav">
+        <button class="cat-btn active" data-cat="todas">Todos</button>
+        <button class="cat-btn" data-cat="eletronicos">Electrónicos</button>
+        <button class="cat-btn" data-cat="vestuario">Vestuário</button>
+        <button class="cat-btn" data-cat="casa">Casa</button>
+        <button class="cat-btn" data-cat="desporto">Desporto</button>
+      </nav>
+
+      <button class="cart-trigger" id="cartTrigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-eyebrow">Colecção Premium 2025</span>
+      <h1 class="hero-title">O melhor do<br/><span>mercado<br/>moçambicano</span></h1>
+      <p class="hero-sub">Produtos seleccionados, entregas rápidas e pagamento via M-Pesa.</p>
+      <a href="#catalogo" class="hero-cta">Explorar Produtos</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card hc1"><span>📱</span><strong>Electrónicos</strong></div>
+      <div class="hero-card hc2"><span>👟</span><strong>Moda</strong></div>
+      <div class="hero-card hc3"><span>🚴</span><strong>Desporto</strong></div>
+      <div class="hero-orb"></div>
+    </div>
+  </section>
+
+  <!-- STATUS BAR (conexão API) -->
+  <div class="status-bar" id="statusBar">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusMsg">A ligar ao servidor…</span>
+  </div>
+
+  <!-- CATÁLOGO -->
+  <main id="catalogo" class="catalogue">
+    <div class="catalogue-header">
+      <h2>Produtos Disponíveis</h2>
+      <span id="productCount" class="prod-count"></span>
+    </div>
+
+    <!-- Skeleton loader enquanto carrega -->
+    <div class="products-grid" id="productsGrid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </main>
+
+  <!-- CARRINHO DRAWER -->
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Carrinho</h3>
+      <button id="closeCart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <span>🛍️</span>
+        <p>O teu carrinho está vazio</p>
+      </div>
+    </div>
+    <div class="drawer-footer" id="drawerFooter" style="display:none">
+      <div class="cart-summary">
+        <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">MZN 0</span></div>
+        <div class="summary-row total-row"><span>Total</span><strong id="cartTotal">MZN 0</strong></div>
+      </div>
+      <button class="btn-checkout" id="checkoutBtn">Finalizar Compra →</button>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- MODAL CHECKOUT -->
+  <div class="modal-wrap" id="checkoutModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Finalizar Compra</h3>
+        <button id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Nome Completo *</label>
+            <input type="text" id="fNome" placeholder="João Silva" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Email *</label>
+            <input type="email" id="fEmail" placeholder="joao@email.com" />
+          </div>
+          <div class="field">
+            <label>Telefone *</label>
+            <input type="tel" id="fTelefone" placeholder="84 000 0000" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Método de Pagamento *</label>
+          <div class="payment-grid">
+            <label class="pay-opt"><input type="radio" name="pay" value="mpesa" /><span>📲 M-Pesa</span></label>
+            <label class="pay-opt"><input type="radio" name="pay" value="emola" /><span>💳 E-Mola</span></label>
+            <label class="pay-opt"><input type="radio" name="pay" value="cartao" /><span>🏦 Cartão</span></label>
+            <label class="pay-opt"><input type="radio" name="pay" value="transferencia" /><span>🔄 Transferência</span></label>
+          </div>
+        </div>
+
+        <div class="order-review">
+          <h4>Resumo do Pedido</h4>
+          <div id="reviewItems"></div>
+          <div class="review-total">Total: <strong id="reviewTotal"></strong></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-ghost" id="btnCancelar">Cancelar</button>
+        <button class="btn-primary" id="btnConfirmar">Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS OVERLAY -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div class="success-anim">✅</div>
+      <h2>Pedido Confirmado!</h2>
+      <p id="successMsg"></p>
+      <button class="btn-primary" id="btnSuccessClose">Continuar a Comprar</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 ShopAbreuMZ-Promo Express, Nampula-Mocambique</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
